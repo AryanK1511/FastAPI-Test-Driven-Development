@@ -1,4 +1,7 @@
 version: '2'
+networks:
+  dev-network:
+    driver: bridge
 services:
   dev-db:
     container_name: postgres
@@ -10,9 +13,13 @@ services:
       - "5433:5432"
     volumes:
       - ./scripts:/docker-entrypoint-initdb.d
+    networks:
+      - dev-network
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - dev-network
